@@ -22,7 +22,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 # ---------------- DATABASE ---------------- #
 
 def init_db():
-    conn = sqlite3.connect("arenafc.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -79,7 +79,7 @@ async def authorize(interaction: discord.Interaction):
 
         async def on_submit(self, interaction: discord.Interaction):
 
-            conn = sqlite3.connect("arenafc.db")
+            conn = sqlite3.connect("database.db")
             cursor = conn.cursor()
 
             cursor.execute("""
@@ -117,7 +117,7 @@ async def authorize(interaction: discord.Interaction):
 @bot.tree.command(name="profile", description="Профиль")
 async def profile(interaction: discord.Interaction):
 
-    conn = sqlite3.connect("arenafc.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM players WHERE discord_id=?",
@@ -150,7 +150,7 @@ async def givelo(interaction: discord.Interaction, user: discord.Member, amount:
     if not check_admin(interaction.user):
         return await interaction.response.send_message("Нет прав", ephemeral=True)
 
-    conn = sqlite3.connect("arenafc.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     cursor.execute("UPDATE players SET elo = elo + ? WHERE discord_id=?",
@@ -167,7 +167,7 @@ async def ngivelo(interaction: discord.Interaction, user: discord.Member, amount
     if not check_admin(interaction.user):
         return await interaction.response.send_message("Нет прав", ephemeral=True)
 
-    conn = sqlite3.connect("arenafc.db")
+    conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
     cursor.execute("UPDATE players SET elo = elo - ? WHERE discord_id=?",
