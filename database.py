@@ -1,18 +1,25 @@
 import sqlite3
 
-conn = sqlite3.connect("database.db")
-cursor = conn.cursor()
+DB_NAME = "database.db"
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS players (
-    discord_id TEXT PRIMARY KEY,
-    game_id TEXT NOT NULL,
-    nickname TEXT NOT NULL,
-    elo INTEGER DEFAULT 1000,
-    wins INTEGER DEFAULT 0,
-    losses INTEGER DEFAULT 0
-)
-""")
+def get_db():
+    return sqlite3.connect(DB_NAME)
 
-conn.commit()
-conn.close()
+
+def init_db():
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS players (
+        discord_id TEXT PRIMARY KEY,
+        game_id TEXT,
+        nickname TEXT,
+        elo INTEGER DEFAULT 1000,
+        wins INTEGER DEFAULT 0,
+        losses INTEGER DEFAULT 0
+    )
+    """)
+
+    conn.commit()
+    conn.close()
