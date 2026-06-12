@@ -54,6 +54,15 @@ async def on_ready():
         print(e)
 
     print(f"Бот запущен как {bot.user}")
+    
+conn = sqlite3.connect("arenafc.db")
+cursor = conn.cursor()
+
+cursor.execute("SELECT name FROM sqlite_master")
+
+print(cursor.fetchall())
+
+conn.close()
 
 # ---------------- REGISTER ---------------- #
 
@@ -282,7 +291,9 @@ async def ngivelo(
     await interaction.response.send_message(
         f"✅ У {member.mention} снято {amount} ELO"
     )
-
+@bot.tree.error
+async def on_app_command_error(interaction, error):
+    print(f"ОШИБКА КОМАНДЫ: {error}")
 # ---------------- START ---------------- #
 
 bot.run(TOKEN)
