@@ -3,7 +3,9 @@ from discord.ext import commands
 from discord import app_commands
 import sqlite3
 
-TOKEN = "ТВОЙ_ТОКЕН"
+import os
+
+TOKEN = os.getenv("TOKEN")
 
 intents = discord.Intents.default()
 intents.members = True
